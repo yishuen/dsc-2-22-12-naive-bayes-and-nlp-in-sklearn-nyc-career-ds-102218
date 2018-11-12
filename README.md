@@ -45,10 +45,6 @@ twenty_train = fetch_20newsgroups(subset='train', categories=categories,
                                   shuffle=True, random_state=42)
 ```
 
-    Downloading 20news dataset. This may take a few minutes.
-    Downloading dataset from https://ndownloader.figshare.com/files/5975967 (14 MB)
-    
-
 We can check the names of our targets to confirm that we have the right ones. 
 
 
@@ -56,26 +52,12 @@ We can check the names of our targets to confirm that we have the right ones.
 twenty_train.target_names
 ```
 
-
-
-
-    ['alt.atheism', 'comp.graphics', 'sci.med', 'soc.religion.christian']
-
-
-
 Next, let's take a look at how many articles we have. 
 
 
 ```python
 len(twenty_train.data)
 ```
-
-
-
-
-    2257
-
-
 
 We can even take a look at the filenames of the articles, and the articles themselves!
 
@@ -87,13 +69,6 @@ print('\n'.join(twenty_train.data[0].split('\n')[:3]))
 print('label: {}'.format(twenty_train.target_names[twenty_train.target[0]]))
 ```
 
-    First line of article
-    From: sd345@city.ac.uk (Michael Collier)
-    Subject: Converting images to HP LaserJet III?
-    Nntp-Posting-Host: hampton
-    label: comp.graphics
-    
-
 It's also a good habit to inspect our labels to get a feel for what they look like.
 
 
@@ -101,13 +76,6 @@ It's also a good habit to inspect our labels to get a feel for what they look li
 ```python
 twenty_train.target[:10]
 ```
-
-
-
-
-    array([1, 1, 3, 3, 3, 3, 3, 2, 2, 2], dtype=int64)
-
-
 
 Now that we have our data, we can move onto preprocessing our text, which includes:
 
@@ -149,13 +117,6 @@ Note that once we've fitted our vectorizer as we did above, we can use it's buil
 count_vectorizer.vocabulary_.get('dog')
 ```
 
-
-
-
-    12055
-
-
-
 Note that the output above represents the index of the word "dog", not the actual count for how many times that word appears. However, we could use that index to look it up, if we chose to!
 
 Once we have our Count Vectorizer, it's pretty easy to leverage sklearn's `TfidfTransformer` to convert these counts to **_Term Frequencies_** (which is what the 'tf' in 'tf-idf' stands for). 
@@ -177,13 +138,6 @@ clf = MultinomialNB()
 clf.fit(x_train_tf, twenty_train.target)
 ```
 
-
-
-
-    MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True)
-
-
-
 Usually, we call `.fit()` and `.predict()` manually at first, so that we can change things around as needed experiment.  However, this can get a bit redundant--luckily, we can make use of sklearn's `Pipeline` class to automate many of the steps we've just done manually!
 
 
@@ -200,18 +154,6 @@ Now that we have our pipeline object that contains the vectorization and transfo
 ```python
 text_clf.fit(twenty_train.data, twenty_train.target)
 ```
-
-
-
-
-    Pipeline(memory=None,
-         steps=[('count_vectorizer', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
-            dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
-            lowercase=True, max_df=1.0, max_features=None, min_df=1,
-            ngram_range=(1, 1), preprocessor=None, stop_words=None,
-     ...inear_tf=False, use_idf=True)), ('clf', MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True))])
-
-
 
 ### Evaluating Classifier Performance 
 
@@ -235,13 +177,6 @@ test_predictions = text_clf.predict(test_articles)
 np.mean(test_predictions == test_labels) # Expected Output: 0.8348868175765646
 ```
 
-
-
-
-    0.8348868175765646
-
-
-
 **_83.4% accuracy--pretty good!_**  Let's round out this lab by viewing a full **_Classification Report_** for how our model performed for each given category:
 
 
@@ -249,17 +184,6 @@ np.mean(test_predictions == test_labels) # Expected Output: 0.8348868175765646
 print(metrics.classification_report(test_labels, test_predictions, 
                               target_names=twenty_test.target_names))
 ```
-
-                            precision    recall  f1-score   support
-    
-               alt.atheism       0.97      0.60      0.74       319
-             comp.graphics       0.96      0.89      0.92       389
-                   sci.med       0.97      0.81      0.88       396
-    soc.religion.christian       0.65      0.99      0.78       398
-    
-               avg / total       0.88      0.83      0.84      1502
-    
-    
 
 # Conclusion
 
