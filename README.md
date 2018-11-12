@@ -1,5 +1,5 @@
 
-# Naive Bayes and SKLearn - Codealong 
+# Naive Bayes and Scikit-Learn - Codealong 
 
 ## Introduction
 
@@ -9,13 +9,13 @@ In this lesson, we'll gain experience using sklearn to work with text data and i
 
 You will be able to:
 
-* Implement Basic NLP Tasks including stemming/lemmatization, tokenization, and word vectorization. 
-* Implement a machine learning classifier to process text, run the classifier, and validate results. 
+* Implement Basic NLP Tasks including stemming/lemmatization, tokenization, and word vectorization
+* Implement a machine learning classifier to process text, run the classifier, and validate results 
 
-### Getting Started
+## Getting Started
 
 In this lesson, we'll see an example of how we can we can use professsional tools such as sklearn to work through a real world NLP task. For this lesson, we'll build a pipeline that processes the text and then trains a Naive Bayesian Classifier on the _Reuters dataset_.  This tutorial has been modified from the tutorial available in the [sklearn documentation](https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html).
-### Loading Our Dataset
+## Loading Our Dataset
 
 We need to start by loading in our dataset.  SKlearn has provided a helper file to do this for us, called `fetch_data.py`.  
 
@@ -98,7 +98,7 @@ np.random.seed(0)
 %matplotlib inline
 ```
 
-### Vectorizing Our Text
+## Vectorizing Our Text
 
 Now that we've loaded in the data, all that's left to do is to vectorize it, so that we can use it to train a **_Multinomial Naive Bayesian Classifier_**.
 
@@ -127,7 +127,7 @@ tf_transformer = TfidfTransformer(use_idf=False).fit(x_train_counts)
 x_train_tf = tf_transformer.transform(x_train_counts)
 ```
 
-### Fitting Our Classifier
+## Fitting Our Classifier
 
 Now that we've vectorized our data, we can create a `MultinomialNB` classifier and fit it to our vectorized data!
 
@@ -155,7 +155,7 @@ Now that we have our pipeline object that contains the vectorization and transfo
 text_clf.fit(twenty_train.data, twenty_train.target)
 ```
 
-### Evaluating Classifier Performance 
+## Evaluating Classifier Performance 
 
 Recall that in order to really get a feel for how well our classifier is performing, we need to check its performance against data it hasn't seen before. We do this by splitting off some of our labeled data into a **_Test Set_**.  We have already have a test set created thanks to the helper function that we used to load everything in. In the cell below, we'll use our pipeline object to create predictions.  We can then make use of the `metrics` module in sklearn to view a **_Classification Report_** that shows us how well our model performed! 
 
@@ -185,6 +185,6 @@ print(metrics.classification_report(test_labels, test_predictions,
                               target_names=twenty_test.target_names))
 ```
 
-# Conclusion
+## Summary
 
 In this lesson, we worked through an example of how to use professional-quality tools such as **_sklearn_** to preprocess, vectorize, and classify real-world text data by predicting the categories of news articles using Naive Bayesian Classification. Great job!
